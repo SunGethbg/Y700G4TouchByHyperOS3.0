@@ -26,7 +26,7 @@
 
 ## 致谢
 - 触控优化：酷安 [@骏冲冲](https://www.coolapk.com/u/骏冲冲)
-- 480Hz 固件：酷安 [@微微薇](https://www.coolapk.com/u/微微薇)
+- 480Hz 固件：酷安 [@van机bar](https://www.coolapk.com/u/van机bar)
 
 ## 更新日志
 见 [changelog.txt](./changelog.txt)
