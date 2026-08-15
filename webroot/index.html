@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新日志 - Hyw.log</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #ffffff;
+            color: #000000;
+            font-family: monospace, "Courier New", sans-serif;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            border-bottom: 1px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1 {
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .status {
+            font-size: 12px;
+            color: #333;
+        }
+        #log-container {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid #000;
+            padding: 10px;
+            background: #fafafa;
+            white-space: pre-wrap;
+            word-break: break-all;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        #log-content {
+            margin: 0;
+        }
+        footer {
+            margin-top: 10px;
+            font-size: 11px;
+            color: #555;
+            text-align: right;
+        }
+        /* 自定义滚动条 */
+        #log-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        #log-container::-webkit-scrollbar-track {
+            background: #f0f0f0;
+        }
+        #log-container::-webkit-scrollbar-thumb {
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hyw.log 更新日志</h1>
+        <span class="status" id="status">加载中...</span>
+    </header>
+    <div id="log-container">
+        <pre id="log-content"></pre>
+    </div>
+    <footer>
+        自动刷新间隔: 5 秒 | 日志文件: /Hyw.log
+    </footer>
+
+    <script>
+        const logContent = document.getElementById('log-content');
+        const statusEl = document.getElementById('status');
+        const container = document.getElementById('log-container');
+
+        async function fetchLog() {
+            try {
+                const response = await fetch('/log_api.sh', { cache: 'no-store' });
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status);
+                }
+                const text = await response.text();
+                logContent.textContent = text;
+                statusEl.textContent = '最后更新: ' + new Date().toLocaleTimeString();
+                // 保持滚动到底部（如果用户之前就在底部）
+                if (container.scrollHeight - container.scrollTop - container.clientHeight < 50) {
+                    container.scrollTop = container.scrollHeight;
+                }
+            } catch (err) {
+                statusEl.textContent = '加载失败: ' + err.message;
+            }
+        }
+
+        // 首次加载
+        fetchLog();
+        // 每5秒刷新
+        setInterval(fetchLog, 5000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+id=Touch_Y700G4_HyperOS
+name=Y700 四代触控优化 + 480Hz For HyperOS 3.0
+version=v1314
+versionCode=520
+author=Hyw
+description=原作者骏冲冲，480hz为微微薇
+updateJson=https://github.com/SunGethbg/Y700G4TouchByHyperOS3.0.git
+
